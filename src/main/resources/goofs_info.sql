@@ -1,0 +1,8 @@
+CREATE TABLE `goods_info` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `goods_id` VARCHAR(255) NOT NULL COMMENT '商品ID',
+  `goods_name` VARCHAR(255) NOT NULL COMMENT '商品名称',
+  `img_url` VARCHAR(255) NOT NULL COMMENT '商品图片地址',
+  `goods_price` VARCHAR(255) NOT NULL COMMENT '商品标价',
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='商品信息表';

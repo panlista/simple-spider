@@ -1,0 +1,40 @@
+package com.panlista.spider;
+
+import com.alibaba.druid.pool.DruidDataSource;
+import com.panlista.spider.component.SpiderHandler;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
+@SpringBootApplication
+public class SpiderApplication {
+
+    @Autowired
+    private SpiderHandler spiderHandler;
+    @Resource
+    private DruidDataSource druidDataSource;
+
+    @Bean
+    public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(druidDataSource);
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:/mybatis/*Mapper.xml"));
+        return sqlSessionFactoryBean.getObject();
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpiderApplication.class, args);
+    }
+    @PostConstruct
+    public void task() {
+        spiderHandler.spiderData();
+    }
+}

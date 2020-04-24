@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.panlista.spider.mapper.GoodsInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.panlista.spider.entity.GoodsInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <insert id="insertForeach" parameterType="java.util.List" useGeneratedKeys="true">
+    insert into goods_info
+    ( id,goods_id,goods_name,img_url,goods_price)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.id},
+      #{item.goodsId},
+      #{item.goodsName},
+      #{item.imgUrl},
+      #{item.goodsPrice}
+      )
+    </foreach>
+  </insert>
+
+</mapper>
